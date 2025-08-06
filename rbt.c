@@ -11,7 +11,8 @@
 #define RB_DOUBLE_BLACK 2
 
 struct rb_node {
-    // only use two bits for color, and pointers on all modern systems are aligned to at least 4 bytes.
+    // parent is a pointer to struct rb_node, and struct rb_node has the same alignment as a pointer (at least 4, 8 on 64-bit)
+    // leaving us 2 bits to play with.
     uintptr_t parent_and_color;
     struct rb_node *left, *right;
 };
@@ -517,7 +518,7 @@ int main(void) {
     printf("\n=== END DELETION TESTS ===\n");
 
     // Insert more values to get wider coverage
-    int extra_values[] = {50, 40, 60, 55, 65, 35, 45};
+    int extra_values[] = {50, 40, 60, 55, 65, 35, 45, 99, 37, 492, 1039, 472, 399};
     size_t extra_count = sizeof(extra_values) / sizeof(extra_values[0]);
 
     for (size_t i = 0; i < extra_count; i++) {
